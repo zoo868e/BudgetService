@@ -15,12 +15,14 @@ class BudgetService(object):
         ret: float = 0
         for Budget in self.Budgets:
             Budgets_list[Budget.YearMonth] = Budget.Amount
-        difference_date = end - start
-        if start < end:
-            return 0
-        while start != end:
+        # if start > end:
+        #     return 0
+        while start <= end:
             month = start.strftime('%Y%m')
-            today_budget = Budgets_list[month] / calendar.monthrange(start.year, start.month)
+            if month not in Budgets_list.keys():
+                start += datetime.timedelta(days=1)
+                continue
+            today_budget = Budgets_list[month] / calendar.monthrange(start.year, start.month)[1]
             ret += today_budget
             start += datetime.timedelta(days=1)
         return ret
