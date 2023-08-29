@@ -7,14 +7,11 @@ class Budget(object):
         self.Amount = Amount
 class BudgetService(object):
     def __init__(self):
-        pass
+        self.Budgets = BudgetRepo()
 
     def query(self, start: datetime, end: datetime) -> float:
-        self.Budgets = BudgetRepo().getAll()
-        Budgets_list = {}
+        Budgets_list = self.get_budget_dict()
         ret: float = 0
-        for Budget in self.Budgets:
-            Budgets_list[Budget.YearMonth] = Budget.Amount
         while start <= end:
             month = start.strftime('%Y%m')
             if month not in Budgets_list.keys():
@@ -23,6 +20,12 @@ class BudgetService(object):
             today_budget = Budgets_list[month] / calendar.monthrange(start.year, start.month)[1]
             ret += today_budget
             start += datetime.timedelta(days=1)
+        return ret
+
+    def get_budget_dict(self) -> dict:
+        ret = {}
+        for Budget in self.Budgets.getAll():
+            ret[Budget.YearMonth] = Budget.Amount
         return ret
 
 
