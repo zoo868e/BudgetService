@@ -10,7 +10,7 @@ class BudgetService(object):
         pass
 
     def query(self, start: datetime, end: datetime) -> float:
-        self.Budgets = getAll()
+        self.Budgets = BudgetRepo().getAll()
         Budgets_list = {}
         ret: float = 0
         for Budget in self.Budgets:
@@ -28,5 +28,6 @@ class BudgetService(object):
         return ret
 
 
-def getAll() -> [Budget]:
-    return [Budget("202308", 123)]
+class BudgetRepo(object):
+    def getAll(self) -> [Budget]:
+        return [Budget("202308", 123)]

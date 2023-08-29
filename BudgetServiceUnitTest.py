@@ -8,7 +8,7 @@ import datetime
 class BudgetServiceTestCase(unittest.TestCase):
     def setUp(self) -> None:
         self.BudgetService = BudgetService.BudgetService()
-        getAll_patch = patch('BudgetService.getAll')
+        getAll_patch = patch('BudgetService.BudgetRepo.getAll')
         self.fake_getAll = getAll_patch.start()
 
     def given_budgets(self, Budgets: list[BudgetService.Budget]):
